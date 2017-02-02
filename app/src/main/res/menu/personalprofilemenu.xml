@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/editButton"
+        android:icon="@drawable/edit_icon"
+        android:title="editbutton"
+        app:showAsAction="ifRoom"/>
+
+
+    <item android:id="@+id/action_settings"
+        android:title="action_settings"
+        app:showAsAction="never"/>
+
+    <item
+        android:id="@+id/backButton"
+        android:icon="@drawable/ic_arrow_forward_black_24dp"
+        android:title="backButton"
+        app:showAsAction="ifRoom"/>
+
+
+</menu>
