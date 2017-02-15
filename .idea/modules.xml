@@ -4,6 +4,8 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/ConnectID.iml" filepath="$PROJECT_DIR$/ConnectID.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/cs2001-coursework-2016-17-level-2-team-1.iml" filepath="$PROJECT_DIR$/cs2001-coursework-2016-17-level-2-team-1.iml" />
     </modules>
   </component>
 </project>
