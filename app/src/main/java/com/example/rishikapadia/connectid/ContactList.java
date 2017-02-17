@@ -3,53 +3,97 @@ package com.example.rishikapadia.connectid;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.GestureDetectorCompat;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
+import android.support.v7.widget.Toolbar;
 import android.view.GestureDetector;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 
-import static android.os.Build.VERSION_CODES.M;
+import java.util.ArrayList;
+
+
 
 /**
  * Created by Rishi Kapadia on 18/01/2017.
  */
 
-public class ContactList extends AppCompatActivity{
+public class ContactList extends AppCompatActivity implements SearchView.OnQueryTextListener {
 
     private GestureDetectorCompat gestureObject;
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.contactlist);
-
-        String[] names = {"Bob","Ben","Bill","Mike","Jo","Sam"};
-        ListAdapter nameAdapter = new ContactAdapter(this,names);
-        ListView list = (ListView) findViewById(R.id.list);
-        list.setAdapter(nameAdapter);
-
-        gestureObject = new GestureDetectorCompat(this, new LearnGesture());
 
 
+        String [] names = {"Bob","Ben","Bill","Jo","Chris","Mark"};
+        int [] cards = {R.drawable.card,R.drawable.card,R.drawable.card,R.drawable.card,R.drawable.card,R.drawable.card};
 
-        list.setOnItemClickListener(
-                new AdapterView.OnItemClickListener(){
-                    @Override
-                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                        String name = String.valueOf(parent.getItemAtPosition(position));
-                        Intent intent = new Intent(view.getContext(),ContactProfile.class);
-                        startActivityForResult(intent,0);
-                        overridePendingTransition(R.animator.slide_in_right,R.animator.slide_out_left);
-                    }
+        Toolbar toolbar;
+        RecyclerView recyclerView;
+        ContactAdapter adapter;
+        RecyclerView.LayoutManager layoutManager;
+        ArrayList<Name> arrayList = new ArrayList<>();
 
-                }
-        );
+        protected void onCreate(Bundle savedInstanceState) {
+            super.onCreate(savedInstanceState);
+            setContentView(R.layout.contactlist);
+
+            gestureObject = new GestureDetectorCompat(this, new LearnGesture());
+
+            toolbar = (Toolbar) findViewById(R.id.toolbar);
+            setSupportActionBar(toolbar);
+            recyclerView = (RecyclerView) findViewById(R.id.list);
+            layoutManager = new LinearLayoutManager(this);
+            recyclerView.setLayoutManager(layoutManager);
+            recyclerView.setHasFixedSize(true);
+
+            int count = 0;
+            for(String Name:names) {
+                arrayList.add(new Name(Name,cards[count]));
+                count++;
+            }
+            adapter = new ContactAdapter(arrayList,this);
+            recyclerView.setAdapter(adapter);
 
 
 
+        }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
 
+        getMenuInflater().inflate(R.menu.menu_items,menu);
+        MenuItem menuItem = menu.findItem(R.id.action_search);
+        SearchView searchView = (SearchView) MenuItemCompat.getActionView(menuItem);
+        searchView.setOnQueryTextListener(this);
+        return true;
     }
+
+    @Override
+    public boolean onQueryTextSubmit(String query) {
+        return false;
+    }
+
+    @Override
+    public boolean onQueryTextChange(String newText) {
+
+        newText = newText.toLowerCase();
+        ArrayList<Name> newList = new ArrayList<>();
+        for (Name name : arrayList){
+            String name1= name.getName().toLowerCase();
+            if(name1.contains(newText))
+                newList.add(name);
+        }
+
+        adapter.setFilter(newList);
+        return true;
+    }
+
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
