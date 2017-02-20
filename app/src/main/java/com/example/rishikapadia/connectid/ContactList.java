@@ -13,10 +13,6 @@ import android.view.GestureDetector;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ListAdapter;
-import android.widget.ListView;
 
 import java.util.ArrayList;
 
@@ -67,11 +63,28 @@ public class ContactList extends AppCompatActivity implements SearchView.OnQuery
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
 
-        getMenuInflater().inflate(R.menu.menu_items,menu);
+        getMenuInflater().inflate(R.menu.contactlist_menu,menu);
         MenuItem menuItem = menu.findItem(R.id.action_search);
         SearchView searchView = (SearchView) MenuItemCompat.getActionView(menuItem);
         searchView.setOnQueryTextListener(this);
         return true;
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+
+            case R.id.backButton:
+                Intent intent = new Intent(this, QRScanner.class);
+                startActivity(intent);
+                overridePendingTransition(R.animator.slide_in_left, R.animator.slide_out_right);
+                return true;
+
+            default:
+                // If we got here, the user's action was not recognized.
+                // Invoke the superclass to handle it.
+                return super.onOptionsItemSelected(item);
+
+        }
     }
 
     @Override
@@ -88,6 +101,7 @@ public class ContactList extends AppCompatActivity implements SearchView.OnQuery
             String name1= name.getName().toLowerCase();
             if(name1.contains(newText))
                 newList.add(name);
+
         }
 
         adapter.setFilter(newList);
@@ -107,7 +121,7 @@ public class ContactList extends AppCompatActivity implements SearchView.OnQuery
 
             if(e2.getX()>e1.getX()){
 
-                Intent intent = new Intent(ContactList.this,MainActivity.class);
+                Intent intent = new Intent(ContactList.this,QRScanner.class);
                 finish();
                 startActivity(intent);
                 overridePendingTransition(R.animator.slide_in_left,R.animator.slide_out_right);

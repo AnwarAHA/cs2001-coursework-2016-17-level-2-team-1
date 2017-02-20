@@ -3,10 +3,17 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
+        android:id="@+id/backButton"
+        android:icon="@drawable/ic_arrow_back_black_24dp"
+        android:title="backButton"
+        app:showAsAction="always"/>
+    <item
         android:id="@+id/saveButton"
         android:icon="@drawable/save_icon"
         android:title="savebutton"
-        app:showAsAction="ifRoom"/>
+        app:showAsAction="always" />
+
+
 
     <!-- Settings, should always be in the overflow -->
     <item android:id="@+id/action_settings"

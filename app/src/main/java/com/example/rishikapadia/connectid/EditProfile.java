@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -22,7 +21,6 @@ public class EditProfile extends AppCompatActivity {
     DbHelper dbHelper;
     SQLiteDatabase sqLiteDatabase;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,12 +34,10 @@ public class EditProfile extends AppCompatActivity {
 
     }
 
-
-
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.editprofilemenu,menu);
+        getMenuInflater().inflate(R.menu.personalprofilemenu,menu);
         return true;
     }
 
@@ -51,9 +47,20 @@ public class EditProfile extends AppCompatActivity {
             case R.id.action_settings:
                 // User chose the "Settings" item, show the app settings UI...
                 return true;
+            case R.id.editButton:
+                Intent intent = new Intent(this, EditProfile.class);
+                startActivity(intent);
+                overridePendingTransition(R.animator.slide_in_left, R.animator.slide_out_right);
+                return true;
+
+            case R.id.backButton:
+                Intent intent2 = new Intent(this, PersonalProfile.class);
+                startActivity(intent2);
+                overridePendingTransition(R.animator.slide_in_right, R.animator.slide_out_left);
+                return true;
 
             case R.id.saveButton:
-                Intent intent = new Intent(this,PersonalProfile.class);
+                Intent intent4 = new Intent(this,PersonalProfile.class);
                 String name = userName.getText().toString();
                 String age = userAge.getText().toString();
                 String course = userCourse.getText().toString();
@@ -65,7 +72,7 @@ public class EditProfile extends AppCompatActivity {
                 dbHelper.addInformation(name,age,course,societies,interests,sqLiteDatabase);
                 Toast.makeText(getBaseContext(),"Data Saved",Toast.LENGTH_LONG).show();
                 dbHelper.close();
-                startActivity(intent);
+                startActivity(intent4);
                 overridePendingTransition(R.animator.slide_in_right,R.animator.slide_out_left);
                 return true;
 
