@@ -4,7 +4,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.hardware.Camera;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
@@ -137,11 +136,11 @@ public class QRScanner extends AppCompatActivity implements ZXingScannerView.Res
                 mScannerView.resumeCameraPreview(QRScanner.this);
             }
         });
-        builder.setNeutralButton("Visit", new DialogInterface.OnClickListener() {
+        builder.setNeutralButton("Add contact", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(result));
-                startActivity(browserIntent);
+                //Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(result));
+                //startActivity(browserIntent);
             }
         });
         builder.setMessage(rawResult.getText());
