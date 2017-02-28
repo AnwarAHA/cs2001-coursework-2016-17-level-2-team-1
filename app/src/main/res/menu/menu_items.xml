@@ -9,4 +9,11 @@
         app:actionViewClass="android.support.v7.widget.SearchView"
         app:showAsAction="always|collapseActionView"></item>
 
+    <item
+        android:id="@+id/backButton2"
+        android:title="BackButton"
+        android:icon="@drawable/ic_arrow_back_black_24dp"
+        app:showAsAction="always|collapseActionView"
+        ></item>
+
 </menu>

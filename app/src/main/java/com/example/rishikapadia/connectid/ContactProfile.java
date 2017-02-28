@@ -30,7 +30,6 @@ import com.google.android.gms.maps.model.MarkerOptions;
 public class ContactProfile extends AppCompatActivity implements OnMapReadyCallback {
 
     private GestureDetectorCompat gestureObject;
-
     private GoogleMap mMap;
 
 

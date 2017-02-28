@@ -28,9 +28,11 @@
         <activity android:name=".EditProfile" />
         <activity
             android:name=".ContactProfile"
-            android:theme="@style/AppTheme2" />
+            android:theme="@style/AppTheme2"
+            android:parentActivityName=".ContactList"/>
         <activity android:name=".ContactList"
-            android:theme="@style/AppTheme2"/>
+            android:theme="@style/AppTheme2"
+            android:parentActivityName=".MainActivity"/>
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").

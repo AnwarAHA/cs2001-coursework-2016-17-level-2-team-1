@@ -1,5 +1,6 @@
 package com.example.rishikapadia.connectid;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
@@ -80,7 +81,10 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.MyViewHo
             intent.putExtra("img_id",name.getCard_id());
             intent.putExtra("user_name",name.getName());
             this.ctx.startActivity(intent);
+            ((Activity)ctx).overridePendingTransition(R.animator.slide_in_right,R.animator.slide_out_left);
         }
+
+
     }
 
     public void setFilter(ArrayList<Name>newList){

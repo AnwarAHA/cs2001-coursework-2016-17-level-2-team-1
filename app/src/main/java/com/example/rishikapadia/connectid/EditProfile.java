@@ -2,6 +2,7 @@ package com.example.rishikapadia.connectid;
 
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -34,6 +35,39 @@ public class EditProfile extends AppCompatActivity {
         userInterests = (EditText) findViewById(R.id.userInterests);
         userSocieties = (EditText) findViewById(R.id.userSocieties);
 
+        String setName = "";
+        String setAge = "";
+        String setCourse = "";
+        String setSocieties = "";
+        String setInterests = "";
+
+
+        dbHelper = new DbHelper(getApplicationContext());
+        sqLiteDatabase = dbHelper.getReadableDatabase();
+
+        Cursor cursor = dbHelper.getInformation(sqLiteDatabase);
+
+
+        if (cursor.moveToFirst()) {
+
+            do {
+                setName = cursor.getString(0);
+                setAge = cursor.getString(1);
+                setCourse = cursor.getString(2);
+                setSocieties = cursor.getString(3);
+                setInterests = cursor.getString(4);
+
+
+            } while (cursor.moveToNext());
+
+        }
+
+        userName.setText(setName);
+        userAge.setText(setAge);
+        userCourse.setText(setCourse);
+        userSocieties.setText(setSocieties);
+        userInterests.setText(setInterests);
+
     }
 
 
@@ -65,13 +99,17 @@ public class EditProfile extends AppCompatActivity {
                 dbHelper.addInformation(name,age,course,societies,interests,sqLiteDatabase);
                 Toast.makeText(getBaseContext(),"Data Saved",Toast.LENGTH_LONG).show();
                 dbHelper.close();
+
+
+
+
+
                 startActivity(intent);
                 overridePendingTransition(R.animator.slide_in_right,R.animator.slide_out_left);
                 return true;
 
             default:
-                // If we got here, the user's action was not recognized.
-                // Invoke the superclass to handle it.
+
                 return super.onOptionsItemSelected(item);
 
         }
