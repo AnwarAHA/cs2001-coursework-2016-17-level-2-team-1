@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -22,7 +21,6 @@ public class EditProfile extends AppCompatActivity {
     Context context = this;
     DbHelper dbHelper;
     SQLiteDatabase sqLiteDatabase;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,14 +68,12 @@ public class EditProfile extends AppCompatActivity {
 
     }
 
-
-
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.editprofilemenu,menu);
         return true;
     }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -94,6 +90,7 @@ public class EditProfile extends AppCompatActivity {
                 String societies = userSocieties.getText().toString();
                 String interests = userInterests.getText().toString();
 
+
                 dbHelper = new DbHelper(context);
                 sqLiteDatabase = dbHelper.getWritableDatabase();
                 dbHelper.addInformation(name,age,course,societies,interests,sqLiteDatabase);
@@ -101,15 +98,15 @@ public class EditProfile extends AppCompatActivity {
                 dbHelper.close();
 
 
-
-
-
                 startActivity(intent);
                 overridePendingTransition(R.animator.slide_in_right,R.animator.slide_out_left);
+
+
                 return true;
 
             default:
-
+                // If we got here, the user's action was not recognized.
+                // Invoke the superclass to handle it.
                 return super.onOptionsItemSelected(item);
 
         }

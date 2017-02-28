@@ -3,6 +3,8 @@
     package="com.example.rishikapadia.connectid">
 
     <uses-permission android:name="android.permission.CAMERA" />
+    <uses-feature android:name="android.hardware.camera"/>
+    <uses-feature android:name="android.hardware.camera.autofocus"/>
 
     <!--
          The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
@@ -17,7 +19,7 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
+        <activity android:name=".QRScanner">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

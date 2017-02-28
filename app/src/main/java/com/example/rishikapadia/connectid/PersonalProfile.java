@@ -4,15 +4,10 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.support.v4.view.GestureDetectorCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.view.GestureDetector;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.widget.ListView;
-
-import static android.os.Build.VERSION_CODES.M;
 
 /**
  * Created by Rishi Kapadia on 18/01/2017.
@@ -84,7 +79,7 @@ public class PersonalProfile extends AppCompatActivity {
                 return true;
 
             case R.id.backButton:
-                Intent intent2 = new Intent(this,MainActivity.class);
+                Intent intent2 = new Intent(this,QRScanner.class);
                 startActivity(intent2);
                 overridePendingTransition(R.animator.slide_in_right,R.animator.slide_out_left);
                 return true;

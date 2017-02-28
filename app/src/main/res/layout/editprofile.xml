@@ -15,6 +15,7 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -23,9 +24,12 @@
             android:ems="4"
             android:textColor="@color/colorText"/>
 
+
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
         android:inputType="textPersonName"
         android:ems="10"
         android:id="@+id/userName"/>
@@ -48,6 +52,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:inputType="textPersonName"
+        android:layout_gravity="center"
+        android:gravity="center"
         android:ems="10"
         android:id="@+id/userAge"
         android:hint="Age"/>
@@ -70,6 +76,8 @@
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
         android:inputType="textPersonName"
         android:ems="10"
         android:id="@+id/userCourse"
@@ -92,6 +100,8 @@
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
         android:inputType="textPersonName"
         android:ems="10"
         android:id="@+id/userSocieties"
@@ -115,6 +125,8 @@
         <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
         android:inputType="textPersonName"
         android:ems="10"
         android:id="@+id/userInterests"

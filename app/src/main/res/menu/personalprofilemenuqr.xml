@@ -14,11 +14,16 @@
         app:showAsAction="never"/>
 
     <item
-        android:id="@+id/backButton"
-        android:icon="@drawable/ic_arrow_forward_black_24dp"
+        android:id="@+id/personalprofilepage"
+        android:icon="@drawable/ic_person_outline_black_24dp"
         android:title="backButton"
-        app:showAsAction="ifRoom"/>
+        app:showAsAction="always"/>
 
+    <item
+        android:id="@+id/contactlist"
+        android:icon="@drawable/ic_contacts_black_24dp"
+        android:title="contactsButton"
+        app:showAsAction="always"/>
 
 
 </menu>
