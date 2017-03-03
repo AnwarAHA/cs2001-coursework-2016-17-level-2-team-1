@@ -10,14 +10,20 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     android:orientation="vertical">
 
-
-    <TextView
-        android:text="Please enter details for your profile:"
-        android:gravity="center"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-        android:id="@+id/textView" />
+        android:orientation="horizontal">
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Name:"
+            android:textSize="20dp"
+            android:ems="4"
+            android:textColor="@color/colorText"/>
+
 
     <EditText
         android:layout_width="wrap_content"
@@ -26,8 +32,21 @@
         android:gravity="center"
         android:inputType="textPersonName"
         android:ems="10"
-        android:id="@+id/userName"
-        android:hint="Name"/>
+        android:id="@+id/userName"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Age:"
+            android:textSize="20dp"
+            android:ems="4"
+            android:textColor="@color/colorText"/>
 
     <EditText
         android:layout_width="wrap_content"
@@ -39,6 +58,21 @@
         android:id="@+id/userAge"
         android:hint="Age"/>
 
+    </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Course:"
+                android:textSize="20dp"
+                android:ems="4"
+                android:textColor="@color/colorText"/>
+
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -48,6 +82,20 @@
         android:ems="10"
         android:id="@+id/userCourse"
         android:hint="Course"/>
+        </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Societies:"
+            android:textSize="20dp"
+            android:ems="4"
+            android:textColor="@color/colorText"/>
 
     <EditText
         android:layout_width="wrap_content"
@@ -59,7 +107,22 @@
         android:id="@+id/userSocieties"
         android:hint="Societies" />
 
-    <EditText
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Interests:"
+            android:textSize="20dp"
+            android:ems="4"
+            android:textColor="@color/colorText"/>
+
+        <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
@@ -68,4 +131,6 @@
         android:ems="10"
         android:id="@+id/userInterests"
         android:hint="Interests"/>
+    </LinearLayout>
+
 </LinearLayout>

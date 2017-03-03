@@ -24,7 +24,7 @@ import java.util.ArrayList;
 
 public class ContactList extends AppCompatActivity implements SearchView.OnQueryTextListener {
 
-    private GestureDetectorCompat gestureObject;
+
 
 
         String [] names = {"Bob","Ben","Bill","Jo","Chris","Mark"};
@@ -40,7 +40,6 @@ public class ContactList extends AppCompatActivity implements SearchView.OnQuery
             super.onCreate(savedInstanceState);
             setContentView(R.layout.contactlist);
 
-            gestureObject = new GestureDetectorCompat(this, new LearnGesture());
 
             toolbar = (Toolbar) findViewById(R.id.toolbar);
             setSupportActionBar(toolbar);
@@ -87,6 +86,8 @@ public class ContactList extends AppCompatActivity implements SearchView.OnQuery
         }
     }
 
+
+
     @Override
     public boolean onQueryTextSubmit(String query) {
         return false;
@@ -109,32 +110,33 @@ public class ContactList extends AppCompatActivity implements SearchView.OnQuery
     }
 
 
-    @Override
-    public boolean onTouchEvent(MotionEvent event) {
-        this.gestureObject.onTouchEvent(event);
-        return super.onTouchEvent(event);
-    }
 
-    class LearnGesture extends GestureDetector.SimpleOnGestureListener{
-        @Override
-        public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
-
-            if(e2.getX()>e1.getX()){
-
-                Intent intent = new Intent(ContactList.this,QRScanner.class);
-                finish();
-                startActivity(intent);
-                overridePendingTransition(R.animator.slide_in_left,R.animator.slide_out_right);
-
-            }
-            else if (e2.getX()<e1.getX()){
-
-            }
-
-
-            return true;
-        }
-    }
+//    @Override
+//    public boolean onTouchEvent(MotionEvent event) {
+//        this.gestureObject.onTouchEvent(event);
+//        return super.onTouchEvent(event);
+//    }
+//
+//    class LearnGesture extends GestureDetector.SimpleOnGestureListener{
+//        @Override
+//        public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
+//
+//            if(e2.getX()>e1.getX()){
+//
+//                Intent intent = new Intent(ContactList.this,MainActivity.class);
+//                finish();
+//                startActivity(intent);
+//                overridePendingTransition(R.animator.slide_in_left,R.animator.slide_out_right);
+//
+//            }
+//            else if (e2.getX()<e1.getX()){
+//
+//            }
+//
+//
+//            return true;
+//        }
+//    }
 
 
 }

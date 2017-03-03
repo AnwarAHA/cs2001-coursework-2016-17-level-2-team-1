@@ -19,11 +19,6 @@
         android:title="backButton"
         app:showAsAction="ifRoom"/>
 
-    <item
-        android:id="@+id/forwardButton"
-        android:icon="@drawable/ic_arrow_forward_black_24dp"
-        android:title="forwardButton"
-        app:showAsAction="ifRoom"/>
 
 
 </menu>

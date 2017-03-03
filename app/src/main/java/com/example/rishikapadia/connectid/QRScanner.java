@@ -179,17 +179,7 @@ public class QRScanner extends AppCompatActivity implements ZXingScannerView.Res
 
 
 
-    public void viewinfo(View view){
 
-        Intent intent = new Intent(this,PersonalProfile.class);
-        startActivity(intent);
-    }
-
-    public void viewcontact(View view){
-
-        Intent intent = new Intent(this,ContactList.class);
-        startActivity(intent);
-    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -200,22 +190,18 @@ public class QRScanner extends AppCompatActivity implements ZXingScannerView.Res
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
 
-            case R.id.editButton:
-                Intent intent = new Intent(this, EditProfile.class);
-                startActivity(intent);
-                overridePendingTransition(R.animator.slide_in_left, R.animator.slide_out_right);
-                return true;
+
 
             case R.id.personalprofilepage:
                 Intent intent2 = new Intent(this, PersonalProfile.class);
                 startActivity(intent2);
-                overridePendingTransition(R.animator.slide_in_right, R.animator.slide_out_left);
+                overridePendingTransition(R.animator.slide_in_left, R.animator.slide_out_right);
                 return true;
 
             case R.id.contactlist:
                 Intent intent3 = new Intent(this, ContactList.class);
                 startActivity(intent3);
-                overridePendingTransition(R.animator.slide_in_left, R.animator.slide_out_right);
+                overridePendingTransition(R.animator.slide_in_right, R.animator.slide_out_left);
                 return true;
 
 

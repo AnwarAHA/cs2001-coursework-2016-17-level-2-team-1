@@ -2,6 +2,7 @@ package com.example.rishikapadia.connectid;
 
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -32,14 +33,47 @@ public class EditProfile extends AppCompatActivity {
         userInterests = (EditText) findViewById(R.id.userInterests);
         userSocieties = (EditText) findViewById(R.id.userSocieties);
 
+        String setName = "";
+        String setAge = "";
+        String setCourse = "";
+        String setSocieties = "";
+        String setInterests = "";
+
+
+        dbHelper = new DbHelper(getApplicationContext());
+        sqLiteDatabase = dbHelper.getReadableDatabase();
+
+        Cursor cursor = dbHelper.getInformation(sqLiteDatabase);
+
+
+        if (cursor.moveToFirst()) {
+
+            do {
+                setName = cursor.getString(0);
+                setAge = cursor.getString(1);
+                setCourse = cursor.getString(2);
+                setSocieties = cursor.getString(3);
+                setInterests = cursor.getString(4);
+
+
+            } while (cursor.moveToNext());
+
+        }
+
+        userName.setText(setName);
+        userAge.setText(setAge);
+        userCourse.setText(setCourse);
+        userSocieties.setText(setSocieties);
+        userInterests.setText(setInterests);
+
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.editprofilemenu,menu);
-        getMenuInflater().inflate(R.menu.personalprofilemenu,menu);
         return true;
     }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -47,33 +81,27 @@ public class EditProfile extends AppCompatActivity {
             case R.id.action_settings:
                 // User chose the "Settings" item, show the app settings UI...
                 return true;
-            case R.id.editButton:
-                Intent intent = new Intent(this, EditProfile.class);
-                startActivity(intent);
-                overridePendingTransition(R.animator.slide_in_left, R.animator.slide_out_right);
-                return true;
-
-            case R.id.backButton:
-                Intent intent2 = new Intent(this, PersonalProfile.class);
-                startActivity(intent2);
-                overridePendingTransition(R.animator.slide_in_right, R.animator.slide_out_left);
-                return true;
 
             case R.id.saveButton:
-                Intent intent4 = new Intent(this,PersonalProfile.class);
+                Intent intent = new Intent(this,PersonalProfile.class);
                 String name = userName.getText().toString();
                 String age = userAge.getText().toString();
                 String course = userCourse.getText().toString();
                 String societies = userSocieties.getText().toString();
                 String interests = userInterests.getText().toString();
 
+
                 dbHelper = new DbHelper(context);
                 sqLiteDatabase = dbHelper.getWritableDatabase();
                 dbHelper.addInformation(name,age,course,societies,interests,sqLiteDatabase);
                 Toast.makeText(getBaseContext(),"Data Saved",Toast.LENGTH_LONG).show();
                 dbHelper.close();
-                startActivity(intent4);
+
+
+                startActivity(intent);
                 overridePendingTransition(R.animator.slide_in_right,R.animator.slide_out_left);
+
+
                 return true;
 
             default:
