@@ -28,11 +28,12 @@
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
+
         android:gravity="center"
         android:inputType="textPersonName"
         android:ems="10"
-        android:id="@+id/userName"/>
+        android:id="@+id/userName"
+        android:hint="Name"/>
     </LinearLayout>
 
     <LinearLayout
@@ -43,7 +44,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Age:"
+            android:text="Year:"
             android:textSize="20dp"
             android:ems="4"
             android:textColor="@color/colorText"/>
@@ -52,7 +53,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:inputType="textPersonName"
-        android:layout_gravity="center"
         android:gravity="center"
         android:ems="10"
         android:id="@+id/userAge"
@@ -76,7 +76,6 @@
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
         android:gravity="center"
         android:inputType="textPersonName"
         android:ems="10"
@@ -100,7 +99,6 @@
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
         android:gravity="center"
         android:inputType="textPersonName"
         android:ems="10"
@@ -125,7 +123,6 @@
         <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
         android:gravity="center"
         android:inputType="textPersonName"
         android:ems="10"
