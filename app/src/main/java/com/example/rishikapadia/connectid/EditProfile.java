@@ -8,8 +8,12 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import com.firebase.client.Firebase;
 
 /**
  * Created by Rishi Kapadia on 18/01/2017.
@@ -18,53 +22,47 @@ import android.widget.Toast;
 public class EditProfile extends AppCompatActivity {
 
     EditText userName,userAge,userCourse,userInterests,userSocieties;
-    Context context = this;
-    DbHelper dbHelper;
-    SQLiteDatabase sqLiteDatabase;
+    private Button testbutton;
+    private Firebase firebase;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.editprofile);
+        Firebase.setAndroidContext(this);
+
+        firebase = new Firebase("https://connectid-361b2.firebaseio.com/");
 
         userName = (EditText) findViewById(R.id.userName);
         userAge = (EditText) findViewById(R.id.userAge);
         userCourse = (EditText) findViewById(R.id.userCourse);
         userInterests = (EditText) findViewById(R.id.userInterests);
         userSocieties = (EditText) findViewById(R.id.userSocieties);
+        testbutton = (Button) findViewById(R.id.testbutton);
 
-        String setName = "";
-        String setAge = "";
-        String setCourse = "";
-        String setSocieties = "";
-        String setInterests = "";
-
-
-        dbHelper = new DbHelper(getApplicationContext());
-        sqLiteDatabase = dbHelper.getReadableDatabase();
-
-        Cursor cursor = dbHelper.getInformation(sqLiteDatabase);
+        testbutton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
 
-        if (cursor.moveToFirst()) {
 
-            do {
-                setName = cursor.getString(0);
-                setAge = cursor.getString(1);
-                setCourse = cursor.getString(2);
-                setSocieties = cursor.getString(3);
-                setInterests = cursor.getString(4);
+            }
+        });
 
 
-            } while (cursor.moveToNext());
 
-        }
 
-        userName.setText(setName);
-        userAge.setText(setAge);
-        userCourse.setText(setCourse);
-        userSocieties.setText(setSocieties);
-        userInterests.setText(setInterests);
+
+
+
+
+
+
+
+
+
+
+
 
     }
 
@@ -83,22 +81,13 @@ public class EditProfile extends AppCompatActivity {
                 return true;
 
             case R.id.saveButton:
-                Intent intent = new Intent(this,PersonalProfile.class);
-                String name = userName.getText().toString();
-                String age = userAge.getText().toString();
-                String course = userCourse.getText().toString();
-                String societies = userSocieties.getText().toString();
-                String interests = userInterests.getText().toString();
+
+                String inputName = userName.getText().toString();
+                Firebase refChild = firebase.child("Name");
+                refChild.setValue(inputName);
 
 
-                dbHelper = new DbHelper(context);
-                sqLiteDatabase = dbHelper.getWritableDatabase();
-                dbHelper.addInformation(name,age,course,societies,interests,sqLiteDatabase);
                 Toast.makeText(getBaseContext(),"Data Saved",Toast.LENGTH_LONG).show();
-                dbHelper.close();
-
-
-                startActivity(intent);
                 overridePendingTransition(R.animator.slide_in_right,R.animator.slide_out_left);
 
                 return true;

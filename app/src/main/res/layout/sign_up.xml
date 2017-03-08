@@ -8,8 +8,16 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
+        android:id="@+id/namefeild"
+        android:hint="Name"/>
+
+    <EditText
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
         android:id="@+id/emailfeild"
-        android:hint="email"/>
+        android:hint="Email"/>
 
     <EditText
 
@@ -17,7 +25,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/passwordfeild"
         android:layout_marginTop="20dp"
-        android:hint="password"/>
+        android:hint="Password"/>
 
     <Button
         android:text="Sign Up"

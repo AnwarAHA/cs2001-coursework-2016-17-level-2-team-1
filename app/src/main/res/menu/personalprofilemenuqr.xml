@@ -2,15 +2,11 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <item
-        android:id="@+id/editButton"
-        android:icon="@drawable/edit_icon"
-        android:title="editbutton"
-        app:showAsAction="ifRoom"/>
 
 
-    <item android:id="@+id/action_settings"
-        android:title="action_settings"
+
+    <item android:id="@+id/sign_out"
+        android:title="Sign Out"
         app:showAsAction="never"/>
 
     <item

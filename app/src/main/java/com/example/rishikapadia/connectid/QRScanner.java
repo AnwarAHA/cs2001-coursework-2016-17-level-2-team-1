@@ -6,6 +6,7 @@ import android.content.pm.PackageManager;
 import android.hardware.Camera;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
@@ -18,11 +19,14 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Toast;
 
+
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.zxing.Result;
 
 import me.dm7.barcodescanner.zxing.ZXingScannerView;
 
 import static android.Manifest.permission.CAMERA;
+import static com.google.zxing.qrcode.decoder.ErrorCorrectionLevel.Q;
 
 
 public class QRScanner extends AppCompatActivity implements ZXingScannerView.ResultHandler {
@@ -30,11 +34,30 @@ public class QRScanner extends AppCompatActivity implements ZXingScannerView.Res
     private static final int REQUEST_CAMERA = 1;
     private ZXingScannerView mScannerView;
     private static int camId = Camera.CameraInfo.CAMERA_FACING_BACK;
+    private FirebaseAuth Auth;
+    public FirebaseAuth.AuthStateListener AuthListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getSupportActionBar().setTitle("Scan a Profile");
+
+        Auth = FirebaseAuth.getInstance();
+
+        AuthListener = new FirebaseAuth.AuthStateListener() {
+            @Override
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+
+                if(firebaseAuth.getCurrentUser()==null){
+
+                    Intent loginIntent = new Intent(QRScanner.this,LogInPage.class);
+                    loginIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(loginIntent);
+
+
+                }
+            }
+        };
 
         mScannerView = new ZXingScannerView(this);
         setContentView(mScannerView);
@@ -46,6 +69,11 @@ public class QRScanner extends AppCompatActivity implements ZXingScannerView.Res
                 requestPermission();
             }
         }
+    }
+
+    public void onStart(){
+        super.onStart();
+        Auth.addAuthStateListener(AuthListener);
     }
 
     private boolean checkPermission() {
@@ -99,6 +127,7 @@ public class QRScanner extends AppCompatActivity implements ZXingScannerView.Res
     @Override
     public void onResume() {
         super.onResume();
+
 
         int currentapiVersion = android.os.Build.VERSION.SDK_INT;
         if (currentapiVersion >= android.os.Build.VERSION_CODES.M) {
@@ -204,6 +233,9 @@ public class QRScanner extends AppCompatActivity implements ZXingScannerView.Res
                 overridePendingTransition(R.animator.slide_in_right, R.animator.slide_out_left);
                 return true;
 
+            case R.id.sign_out:
+
+                signOut();
 
             default:
                 // If we got here, the user's action was not recognized.
@@ -212,6 +244,12 @@ public class QRScanner extends AppCompatActivity implements ZXingScannerView.Res
 
         }
     }
+
+    private void signOut(){
+        Auth.signOut();;
+
+    }
+
 
 }
 
