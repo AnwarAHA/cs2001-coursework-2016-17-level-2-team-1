@@ -27,6 +27,7 @@ public class PersonalProfile extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.personalprofile);
+        getSupportActionBar().setTitle("My Profile");
 
 
         listView = (ListView) findViewById(R.id.listview);

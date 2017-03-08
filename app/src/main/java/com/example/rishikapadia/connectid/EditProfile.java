@@ -101,7 +101,6 @@ public class EditProfile extends AppCompatActivity {
                 startActivity(intent);
                 overridePendingTransition(R.animator.slide_in_right,R.animator.slide_out_left);
 
-
                 return true;
 
             default:
@@ -110,6 +109,7 @@ public class EditProfile extends AppCompatActivity {
                 return super.onOptionsItemSelected(item);
 
         }
+
     }
 
 }

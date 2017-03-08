@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical" android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
     >
 <RelativeLayout
@@ -48,10 +49,15 @@
     <TextView
         android:text="TextView"
         android:layout_width="wrap_content"
+
         android:layout_height="wrap_content"
         android:id="@+id/textCourse"
         tools:text="course"
         android:textSize="18sp"
+        android:layout_marginLeft="78dp"
+        android:layout_marginBottom="41dp"
+        android:layout_above="@+id/textAge"
+
         android:textColor="@color/colorText"/>
 
 </LinearLayout>

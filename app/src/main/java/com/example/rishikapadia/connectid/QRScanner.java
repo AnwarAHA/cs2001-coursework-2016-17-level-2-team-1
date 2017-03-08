@@ -34,6 +34,7 @@ public class QRScanner extends AppCompatActivity implements ZXingScannerView.Res
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getSupportActionBar().setTitle("Scan a Profile");
 
         mScannerView = new ZXingScannerView(this);
         setContentView(mScannerView);
