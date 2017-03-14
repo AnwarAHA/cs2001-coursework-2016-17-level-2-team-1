@@ -1,62 +1,69 @@
 package com.example.rishikapadia.connectid;
 
+import com.google.firebase.database.DatabaseReference;
+
 /**
  * Created by Rishi Kapadia on 18/01/2017.
  */
 
 public class DataProvider {
 
-    private String name;
-    private String age;
-    private String course;
-    private String societies;
-    private String interests;
+    private String Name;
+    private String Age;
+    private String Course;
+    private String Societies;
+    private String Interests;
 
-    public DataProvider(String name,String age,String course,String societies,String interests){
-        this.name = name;
-        this.age = age;
-        this.course = course;
-        this.societies = societies;
-        this.interests = interests;
+    public DataProvider() {
+
     }
 
-    public String getAge() {
-        return age;
-    }
-
-    public void setAge(String age) {
-        this.age = age;
+    public DataProvider(String name, String age, String course, String societies, String interests) {
+        this.Name = name;
+        this.Age = age;
+        this.Course = course;
+        this.Societies = societies;
+        this.Interests = interests;
     }
 
     public String getName() {
-        return name;
+        return Name;
     }
 
     public void setName(String name) {
-        this.name = name;
+        Name = name;
+    }
+
+    public String getAge() {
+        return Age;
+    }
+
+    public void setAge(String age) {
+        Age = age;
     }
 
     public String getCourse() {
-        return course;
+        return Course;
     }
 
     public void setCourse(String course) {
-        this.course = course;
+        Course = course;
     }
 
     public String getSocieties() {
-        return societies;
+        return Societies;
     }
 
     public void setSocieties(String societies) {
-        this.societies = societies;
+        Societies = societies;
     }
 
     public String getInterests() {
-        return interests;
+        return Interests;
     }
 
     public void setInterests(String interests) {
-        this.interests = interests;
+        Interests = interests;
     }
 }
+
