@@ -1,26 +1,46 @@
 package com.example.rishikapadia.connectid;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 
-/**
- * Created by Rishi Kapadia on 18/01/2017.
- */
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Picasso;
+
+import java.util.Map;
+
+import static com.example.rishikapadia.connectid.R.id.picPreview;
+import static com.example.rishikapadia.connectid.R.id.userProfilePicture;
+
 
 public class PersonalProfile extends AppCompatActivity {
 
-    ListView listView;
-    SQLiteDatabase sqLiteDatabase;
-    DbHelper dbHelper;
-    Cursor cursor;
-    DataAdapter dataAdapter;
+    private DatabaseReference mDatabase;
 
+    private FirebaseAuth firebaseAuth;
+
+    private FirebaseUser firebaseUser;
+
+
+    TextView textName,textAge,textCourse,textSocieties,textInterests;
+
+    ImageView profilePicture;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,31 +49,48 @@ public class PersonalProfile extends AppCompatActivity {
         setContentView(R.layout.personalprofile);
         getSupportActionBar().setTitle("My Profile");
 
+        textName = (TextView) findViewById(R.id.textName);
+        textAge = (TextView) findViewById(R.id.textAge);
+        textCourse = (TextView) findViewById(R.id.textCourse);
+        textSocieties = (TextView) findViewById(R.id.textSocieties);
+        textInterests = (TextView) findViewById(R.id.textInterests);
+        profilePicture = (ImageView) findViewById(R.id.userProfilePicture);
 
-        listView = (ListView) findViewById(R.id.listview);
-        dataAdapter = new DataAdapter(getApplicationContext(), R.layout.personalprofilerow);
-        listView.setAdapter(dataAdapter);
-        dbHelper = new DbHelper(getApplicationContext());
-        sqLiteDatabase = dbHelper.getReadableDatabase();
-        cursor = dbHelper.getInformation(sqLiteDatabase);
+        firebaseAuth = FirebaseAuth.getInstance();
+
+        firebaseUser = firebaseAuth.getCurrentUser();
+
+        mDatabase = FirebaseDatabase.getInstance().getReference().child("Users").child(firebaseUser.getUid());
+
+        mDatabase.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Map<String, String> map = (Map)dataSnapshot.getValue();
+
+                String savedName = map.get("Name");
+                String savedAge = map.get("Age");
+                String savedCourse = map.get("Course");
+                String savedInterests = map.get("Interests");
+                String savedSocieties = map.get("Societies");
+                String savedProfilePic = map.get("Image");
+
+                textName.setText(savedName);
+                textAge.setText(savedAge);
+                textCourse.setText(savedCourse);
+                textInterests.setText(savedInterests);
+                textSocieties.setText(savedSocieties);
+                Uri profilePic = Uri.parse(savedProfilePic);
+                Picasso.with(PersonalProfile.this).load(profilePic).fit().centerCrop().into(profilePicture);
 
 
-        if (cursor.moveToFirst()) {
+            }
 
-            do {
-                String name, age, course,societies,interests;
-                name = cursor.getString(0);
-                age = cursor.getString(1);
-                course = cursor.getString(2);
-                societies = cursor.getString(3);
-                interests = cursor.getString(4);
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
 
-                DataProvider dataProvider = new DataProvider(name, age, course,societies,interests);
-                dataAdapter.add(dataProvider);
+            }
+        });
 
-            } while (cursor.moveToNext());
-
-        }
 
 
     }
