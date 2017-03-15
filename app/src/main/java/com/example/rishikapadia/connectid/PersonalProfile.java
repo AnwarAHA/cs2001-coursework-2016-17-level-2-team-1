@@ -7,12 +7,15 @@ import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -37,6 +40,7 @@ public class PersonalProfile extends AppCompatActivity {
 
     private FirebaseUser firebaseUser;
 
+    public String twitterHandle,instaHandle,linkedinHandle;
 
     TextView textName,textAge,textCourse,textSocieties,textInterests;
 
@@ -73,12 +77,18 @@ public class PersonalProfile extends AppCompatActivity {
                 String savedInterests = map.get("Interests");
                 String savedSocieties = map.get("Societies");
                 String savedProfilePic = map.get("Image");
+                String savedTwitter = map.get("Twitter");
+                String savedInstagram = map.get("Instagram");
+                String savedLinkedin = map.get("Linkedin");
 
                 textName.setText(savedName);
                 textAge.setText(savedAge);
                 textCourse.setText(savedCourse);
                 textInterests.setText(savedInterests);
                 textSocieties.setText(savedSocieties);
+                twitterHandle = savedTwitter;
+                instaHandle = savedInstagram;
+                linkedinHandle = savedLinkedin;
                 Uri profilePic = Uri.parse(savedProfilePic);
                 Picasso.with(PersonalProfile.this).load(profilePic).fit().centerCrop().into(profilePicture);
 
@@ -91,9 +101,8 @@ public class PersonalProfile extends AppCompatActivity {
             }
         });
 
-
-
     }
+
 
 
 
@@ -101,6 +110,34 @@ public class PersonalProfile extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.personalprofilemenu,menu);
         return true;
+    }
+
+    public void twitterclick(View view){
+        if (TextUtils.isEmpty(twitterHandle)){
+            Toast.makeText(getBaseContext(),"Twitter not linked",Toast.LENGTH_LONG).show();
+        }else {
+            Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.twitter.com/" + twitterHandle));
+            startActivity(browserIntent);
+        }
+    }
+
+    public void instagramclick(View view){
+        if (TextUtils.isEmpty(instaHandle)){
+            Toast.makeText(getBaseContext(),"Instagram not linked",Toast.LENGTH_LONG).show();
+        }else{
+            Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.instagram.com/"+instaHandle));
+            startActivity(browserIntent);
+        }
+
+    }
+
+    public void linkedinclick(View view){
+        if (TextUtils.isEmpty(linkedinHandle)){
+            Toast.makeText(getBaseContext(),"Linkedin not linked",Toast.LENGTH_LONG).show();
+        }else {
+            Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.linkedin.com/in/" + linkedinHandle));
+            startActivity(browserIntent);
+        }
     }
 
     @Override

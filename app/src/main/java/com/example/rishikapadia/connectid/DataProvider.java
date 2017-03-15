@@ -13,17 +13,22 @@ public class DataProvider {
     private String Course;
     private String Societies;
     private String Interests;
+    private String Twitter;
 
     public DataProvider() {
 
     }
 
-    public DataProvider(String name, String age, String course, String societies, String interests) {
+
+
+    public DataProvider(String name, String age, String course, String societies, String interests, String twitter) {
         this.Name = name;
         this.Age = age;
         this.Course = course;
         this.Societies = societies;
         this.Interests = interests;
+        this.Twitter = twitter;
+
     }
 
     public String getName() {
@@ -64,6 +69,14 @@ public class DataProvider {
 
     public void setInterests(String interests) {
         Interests = interests;
+    }
+
+    public String getTwitter() {
+        return Twitter;
+    }
+
+    public void setTwitter(String twitter) {
+        Twitter = twitter;
     }
 }
 

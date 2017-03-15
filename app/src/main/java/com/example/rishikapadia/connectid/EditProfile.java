@@ -48,7 +48,7 @@ import static com.google.zxing.qrcode.decoder.ErrorCorrectionLevel.Q;
 
 public class EditProfile extends AppCompatActivity {
 
-    EditText userName,userAge,userCourse,userInterests,userSocieties;
+    EditText userName,userAge,userCourse,userInterests,userSocieties,userTwitter,userInstagram,userLinkedin;
 
     Button profilePicture;
 
@@ -66,11 +66,7 @@ public class EditProfile extends AppCompatActivity {
 
     private StorageReference storageReference;
 
-    private DatabaseReference databaseReference;
-
     private ProgressDialog progressDialog;
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,8 +83,6 @@ public class EditProfile extends AppCompatActivity {
         storageReference = FirebaseStorage.getInstance().getReference();
 
         mDatabase = FirebaseDatabase.getInstance().getReference().child("Users").child(firebaseUser.getUid());
-
-
 
         profilePicture = (Button) findViewById(R.id.profilePicture);
 
@@ -111,6 +105,10 @@ public class EditProfile extends AppCompatActivity {
         userCourse = (EditText) findViewById(R.id.userCourse);
         userInterests = (EditText) findViewById(R.id.userInterests);
         userSocieties = (EditText) findViewById(R.id.userSocieties);
+        userTwitter = (EditText) findViewById(R.id.userTwitter);
+        userInstagram = (EditText) findViewById(R.id.userInstagram);
+        userLinkedin = (EditText) findViewById(R.id.userLinkedin);
+
 
         mDatabase.addValueEventListener(new ValueEventListener() {
             @Override
@@ -124,13 +122,18 @@ public class EditProfile extends AppCompatActivity {
                 String savedInterests = map.get("Interests");
                 String savedSocieties = map.get("Societies");
                 String savedProfilePic = map.get("Image");
-
+                String savedTwitter = map.get("Twitter");
+                String savedInstagram = map.get("Instagram");
+                String savedLinkedin = map.get("Linkedin");
 
                 userName.setText(savedName);
                 userAge.setText(savedAge);
                 userCourse.setText(savedCourse);
                 userInterests.setText(savedInterests);
                 userSocieties.setText(savedSocieties);
+                userTwitter.setText(savedTwitter);
+                userInstagram.setText(savedInstagram);
+                userLinkedin.setText(savedLinkedin);
                 Uri profilePic = Uri.parse(savedProfilePic);
                 Picasso.with(EditProfile.this).load(profilePic).fit().centerCrop().into(picPreview);
 
@@ -171,6 +174,9 @@ public class EditProfile extends AppCompatActivity {
         final String course_val = userCourse.getText().toString().trim();
         final String interest_val = userInterests.getText().toString().trim();
         final String societies_val = userSocieties.getText().toString().trim();
+        final String twitter_val = userTwitter.getText().toString().trim();
+        final String instagram_val = userInstagram.getText().toString().trim();
+        final String linkedin_val = userLinkedin.getText().toString().trim();
 
         if(!TextUtils.isEmpty(name_val) && !TextUtils.isEmpty(age_val) && !TextUtils.isEmpty(course_val) && !TextUtils.isEmpty(interest_val) && !TextUtils.isEmpty(societies_val) && imageUri != null){
 
@@ -190,7 +196,11 @@ public class EditProfile extends AppCompatActivity {
                     mDatabase.child("Course").setValue(course_val);
                     mDatabase.child("Interests").setValue(interest_val);
                     mDatabase.child("Societies").setValue(societies_val);
+                    mDatabase.child("Twitter").setValue(twitter_val);
+                    mDatabase.child("Instagram").setValue(instagram_val);
+                    mDatabase.child("Linkedin").setValue(linkedin_val);
                     mDatabase.child("Image").setValue(downloadUrl.toString());
+
                     progressDialog.dismiss();
                     Toast.makeText(getBaseContext(),"Data Saved",Toast.LENGTH_LONG).show();
 
@@ -222,15 +232,6 @@ public class EditProfile extends AppCompatActivity {
             case R.id.saveButton:
 
                 saveProfile();
-
-
-
-//                String inputName = userName.getText().toString();
-//                Firebase refChild = firebase.child("Name");
-//                refChild.setValue(inputName);
-
-
-
                 overridePendingTransition(R.animator.slide_in_right,R.animator.slide_out_left);
 
                 return true;
@@ -243,6 +244,8 @@ public class EditProfile extends AppCompatActivity {
         }
 
     }
+
+
 
 
 

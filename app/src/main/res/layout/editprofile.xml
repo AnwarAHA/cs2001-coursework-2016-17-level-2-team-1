@@ -75,7 +75,7 @@
         android:gravity="center"
         android:ems="10"
         android:id="@+id/userAge"
-        android:hint="Age"/>
+        android:hint="Year"/>
 
     </LinearLayout>
 
@@ -147,6 +147,75 @@
         android:ems="10"
         android:id="@+id/userInterests"
         android:hint="Interests"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Twitter:"
+            android:textSize="20dp"
+            android:ems="4"
+            android:textColor="@color/colorText"/>
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:inputType="textPersonName"
+            android:ems="10"
+            android:id="@+id/userTwitter"
+            android:hint="Twitter handle"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Instagram:"
+            android:textSize="20dp"
+            android:ems="4"
+            android:textColor="@color/colorText"/>
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:inputType="textPersonName"
+            android:ems="10"
+            android:id="@+id/userInstagram"
+            android:hint="Instagram handle"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Linkedin:"
+            android:textSize="20dp"
+            android:ems="4"
+            android:textColor="@color/colorText"/>
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:inputType="textPersonName"
+            android:ems="10"
+            android:id="@+id/userLinkedin"
+            android:hint="Linkedin handle"/>
     </LinearLayout>
 
 
