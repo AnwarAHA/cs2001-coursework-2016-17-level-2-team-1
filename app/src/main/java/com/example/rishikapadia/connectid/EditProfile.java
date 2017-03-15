@@ -33,6 +33,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.squareup.picasso.Picasso;
 
 import junit.framework.Test;
 
@@ -131,7 +132,8 @@ public class EditProfile extends AppCompatActivity {
                 userInterests.setText(savedInterests);
                 userSocieties.setText(savedSocieties);
                 Uri profilePic = Uri.parse(savedProfilePic);
-                picPreview.setImageURI(profilePic);
+                Picasso.with(EditProfile.this).load(profilePic).fit().centerCrop().into(picPreview);
+
             }
 
             @Override
@@ -155,7 +157,6 @@ public class EditProfile extends AppCompatActivity {
         if(requestCode == GALLERY_REQUEST && resultCode == RESULT_OK){
 
             imageUri = data.getData();
-
             picPreview.setImageURI(imageUri);
         }
     }
@@ -176,11 +177,13 @@ public class EditProfile extends AppCompatActivity {
             StorageReference filepath = storageReference.child("Profile_Images").child(imageUri.getLastPathSegment());
             Log.v("E_VALUE","uri: "+filepath);
 
+
             filepath.putFile(imageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                 @Override
                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
 
-                    Uri downloadUrl = imageUri;
+                    @SuppressWarnings("VisibleForTests")
+                    Uri downloadUrl = taskSnapshot.getDownloadUrl();
 
                     mDatabase.child("Name").setValue(name_val);
                     mDatabase.child("Age").setValue(age_val);
