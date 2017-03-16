@@ -74,12 +74,16 @@
                     android:layout_height="90dp"
                     android:layout_marginLeft="20dp"
                     android:src="@drawable/twitter_icon"
+                    android:scaleType="fitCenter"
+                    android:background="#ffffff"
                     android:onClick="twitterclick"/>
 
                 <ImageButton
                     android:layout_width="90dp"
                     android:layout_height="90dp"
                     android:src="@drawable/instagram_icon"
+                    android:scaleType="fitCenter"
+                    android:background="#ffffff"
                     android:layout_marginLeft="20dp"
                     android:onClick="instagramclick"/>
 
@@ -87,9 +91,10 @@
                     android:layout_width="90dp"
                     android:layout_height="90dp"
                     android:layout_marginLeft="20dp"
+                    android:scaleType="fitCenter"
+                    android:background="#ffffff"
                     android:src="@drawable/linkedin_icon"
                     android:onClick="linkedinclick"/>
-
             </LinearLayout>
 
             <fragment
