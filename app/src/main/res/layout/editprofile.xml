@@ -49,9 +49,10 @@
         android:layout_height="wrap_content"
 
         android:gravity="center"
-        android:inputType="textPersonName"
         android:ems="10"
         android:id="@+id/userName"
+        android:inputType="textCapWords"
+
         android:hint="Name"/>
     </LinearLayout>
 
@@ -96,7 +97,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:inputType="textPersonName"
+        android:inputType="textCapWords"
         android:ems="10"
         android:id="@+id/userCourse"
         android:hint="Course"/>
@@ -143,7 +144,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:inputType="textPersonName"
+            android:inputType="textCapSentences"
         android:ems="10"
         android:id="@+id/userInterests"
         android:hint="Interests"/>
