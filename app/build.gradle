@@ -21,7 +21,12 @@ android {
     packagingOptions {
         exclude 'META-INF/LICENSE'
         exclude 'META-INF/NOTICE'
+        exclude 'META-INF/LICENSE-FIREBASE.txt'
     }
+}
+
+repositories{
+    mavenCentral();
 }
 
 dependencies {
@@ -47,6 +52,7 @@ dependencies {
     compile 'com.google.firebase:firebase-config:10.0.1'
     compile 'com.firebase:firebase-client-android:2.4.1'
     compile 'com.squareup.picasso:picasso:2.5.2'
+    compile 'com.facebook.android:facebook-android-sdk:[4,5)'
 
     testCompile 'junit:junit:4.12'
 
