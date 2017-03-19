@@ -1,5 +1,6 @@
 package com.example.rishikapadia.connectid;
 
+import android.accounts.Account;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -32,12 +33,27 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FacebookAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.TwitterAuthProvider;
 import com.google.firebase.auth.UserInfo;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.twitter.sdk.android.Twitter;
+import com.twitter.sdk.android.core.TwitterApiClient;
+import com.twitter.sdk.android.core.TwitterAuthConfig;
+import io.fabric.sdk.android.Fabric;
+import retrofit2.Call;
+
+import com.twitter.sdk.android.core.Callback;
+import com.twitter.sdk.android.core.Result;
+import com.twitter.sdk.android.core.TwitterCore;
+import com.twitter.sdk.android.core.TwitterException;
+import com.twitter.sdk.android.core.TwitterSession;
+import com.twitter.sdk.android.core.identity.TwitterLoginButton;
+import com.twitter.sdk.android.core.models.User;
+import com.twitter.sdk.android.core.services.AccountService;
 
 import java.util.Arrays;
 
@@ -59,10 +75,16 @@ public class LogInPage extends AppCompatActivity {
 
     private FirebaseAuth.AuthStateListener mAuthListener;
 
+    private TwitterLoginButton mLoginButton;
+    private static final String TWITTER_KEY = "1l7kln9IvJOR7SSR8SRIt8znJ";
+    private static final String TWITER_SECRET = "nsC0Sr041m5dcinWPVwbHDowF5o38BTVa4DIKKv0fUWmYmqIcx";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //Twitter
+        TwitterAuthConfig authConfig = new TwitterAuthConfig(TWITTER_KEY,TWITER_SECRET);
+        Fabric.with(this,new Twitter(authConfig));
 
         //Facebook
         FacebookSdk.sdkInitialize(this.getApplicationContext());
@@ -111,6 +133,20 @@ public class LogInPage extends AppCompatActivity {
         };
 
 
+        mLoginButton = (TwitterLoginButton)findViewById(R.id.twitter_login_button);
+        mLoginButton.setCallback(new Callback<TwitterSession>() {
+            @Override
+            public void success(Result<TwitterSession> result) {
+                handleTwitterSession(result.data);
+            }
+
+            @Override
+            public void failure(TwitterException exception) {
+
+            }
+        });
+
+
 
 
 
@@ -137,6 +173,75 @@ public class LogInPage extends AppCompatActivity {
         });
     }
 
+    // Twitter login
+    private void handleTwitterSession(TwitterSession session) {
+        Log.d(TAG, "handleTwitterSession:" + session);
+        AuthCredential credential = TwitterAuthProvider.getCredential(
+                session.getAuthToken().token,
+                session.getAuthToken().secret);
+        final TwitterSession twitterSession = session;
+        firebaseAuth.signInWithCredential(credential)
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        Log.d(TAG, "signInWithCredential:onComplete:" + task.isSuccessful());
+                        Twitter          twitter = Twitter.getInstance();
+                        System.out.println(twitterSession);
+                        TwitterApiClient api     = twitter.core.getApiClient(twitterSession);
+                        AccountService   service = api.getAccountService();
+                        Call<User>       user    = service.verifyCredentials(true, true);
+
+
+
+                        user.enqueue(new Callback<User>()
+                        {
+                            @Override
+                            public void success(Result<User> userResult)
+                            {
+                                String user_id = firebaseAuth.getCurrentUser().getUid();
+
+                                DatabaseReference current_user = databaseReference.child(user_id);
+
+                                String twitterUserId = "";
+                                FirebaseUser cUser = FirebaseAuth.getInstance().getCurrentUser();
+                                for(UserInfo profile : cUser.getProviderData()){
+                                    twitterUserId = profile.getUid();
+                                }
+                                String name = userResult.data.name;
+                                String email = userResult.data.email;
+                                String photoUrl   = userResult.data.profileImageUrl;
+                                current_user.child("Name").setValue(name);
+                                current_user.child("Image").setValue(photoUrl);
+                            }
+
+                            @Override
+                            public void failure(TwitterException exc)
+                            {
+                                Log.d("TwitterKit", "Verify Credentials Failure", exc);
+                            }
+                        });
+
+
+
+
+
+
+
+                        Intent intent = new Intent(LogInPage.this,QRScanner.class);
+                        startActivity(intent);
+                        // If sign in fails, display a message to the user. If sign in succeeds
+                        // the auth state listener will be notified and logic to handle the
+                        // signed in user can be handled in the listener.
+                        if (!task.isSuccessful()) {
+                            Log.w(TAG, "signInWithCredential", task.getException());
+                            Toast.makeText(LogInPage.this, "Authentication failed.",
+                                    Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+    }
+
+
 
     @Override
     public void onStart() {
@@ -159,6 +264,9 @@ public class LogInPage extends AppCompatActivity {
         super.onActivityResult(requestCode,resultCode,data);
         //Pass activity result back to Facebook
         callbackManager.onActivityResult(requestCode,resultCode,data);
+
+        // Pass the activity result to the Twitter login button.
+        mLoginButton.onActivityResult(requestCode, resultCode, data);
     }
 
 
