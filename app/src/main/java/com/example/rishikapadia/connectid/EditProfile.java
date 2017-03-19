@@ -43,6 +43,10 @@ public class EditProfile extends AppCompatActivity {
 
     ImageView picPreview;
 
+    ImageView twitterIcon;
+    ImageView instaIcon;
+    ImageView liIcon;
+
     private Uri imageUri = null;
 
     private static final int GALLERY_REQUEST = 1;
@@ -78,6 +82,10 @@ public class EditProfile extends AppCompatActivity {
         progressDialog = new ProgressDialog(this);
 
         picPreview = (ImageView) findViewById(R.id.picPreview);
+
+        twitterIcon = (ImageView)findViewById(R.id.twitterIcon);
+        instaIcon = (ImageView)findViewById(R.id.instaIcon);
+        liIcon = (ImageView)findViewById(R.id.liIcon);
 
         profilePicture.setOnClickListener(new View.OnClickListener() {
             @Override
