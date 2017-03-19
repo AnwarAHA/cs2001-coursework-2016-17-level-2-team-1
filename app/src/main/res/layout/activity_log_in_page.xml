@@ -29,13 +29,15 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Log In"
-        android:id="@+id/login"/>
+        android:id="@+id/login"
+        android:layout_gravity="center_horizontal"/>
 
     <Button
         android:text="Create Account"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/createAccount"
+        android:layout_gravity="center_horizontal"
         />
 
     <com.facebook.login.widget.LoginButton
@@ -43,8 +45,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="30dp"
-        android:layout_marginBottom="30dp" />
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp" />
 
     <com.twitter.sdk.android.core.identity.TwitterLoginButton
         android:id="@+id/twitter_login_button"
