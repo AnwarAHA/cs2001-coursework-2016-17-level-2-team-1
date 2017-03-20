@@ -173,7 +173,7 @@ public class QRScanner extends AppCompatActivity implements ZXingScannerView.Res
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Scan Result");
-        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+        builder.setPositiveButton("Cancel", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
 
@@ -203,8 +203,11 @@ public class QRScanner extends AppCompatActivity implements ZXingScannerView.Res
 
     private void storecontact(String contact){
 
-        DatabaseReference addcontact = mDatabase.child("TestUser").child("TestContact");
-        addcontact.setValue(contact);
+        DatabaseReference addcontact = mDatabase.child(firebaseAuth.getCurrentUser().getUid()).child("Contacts");
+        //DatabaseReference addcontact = mDatabase.child(firebaseAuth.getCurrentUser().getUid());
+        //addcontact.setValue(contact);
+        addcontact.child(contact).setValue(true);
+        Toast.makeText(getApplicationContext(), "Contact saved", Toast.LENGTH_SHORT);
 
 
         Intent intent = new Intent(QRScanner.this, ContactList.class);
