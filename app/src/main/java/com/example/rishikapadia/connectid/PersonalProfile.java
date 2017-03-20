@@ -12,6 +12,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -44,8 +45,7 @@ public class PersonalProfile extends AppCompatActivity {
 
     TextView textName,textAge,textCourse,textSocieties,textInterests;
 
-    ImageView profilePicture;
-
+    ImageButton profilePicture;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -58,7 +58,7 @@ public class PersonalProfile extends AppCompatActivity {
         textCourse = (TextView) findViewById(R.id.textCourse);
         textSocieties = (TextView) findViewById(R.id.textSocieties);
         textInterests = (TextView) findViewById(R.id.textInterests);
-        profilePicture = (ImageView) findViewById(R.id.userProfilePicture);
+        profilePicture = (ImageButton) findViewById(R.id.userProfilePicture);
 
         firebaseAuth = FirebaseAuth.getInstance();
 
@@ -104,6 +104,10 @@ public class PersonalProfile extends AppCompatActivity {
     }
 
 
+    public void profilePicClick(View view){
+        Intent intent = new Intent(PersonalProfile.this,ProfileImage.class);
+        startActivity(intent);
+    }
 
 
     @Override
