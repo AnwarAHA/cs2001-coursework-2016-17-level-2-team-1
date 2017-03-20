@@ -107,6 +107,8 @@ public class EditProfile extends AppCompatActivity {
         userLinkedin = (EditText) findViewById(R.id.userLinkedin);
 
 
+
+
         mDatabase.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -187,10 +189,10 @@ public class EditProfile extends AppCompatActivity {
 
                     @SuppressWarnings("VisibleForTests")
                     Uri downloadUrl = taskSnapshot.getDownloadUrl();
-
                     mDatabase.child("Name").setValue(name_val);
                     mDatabase.child("Age").setValue(age_val);
                     mDatabase.child("Course").setValue(course_val);
+                    mDatabase.child("Contacts").setValue("");
                     mDatabase.child("Interests").setValue(interest_val);
                     mDatabase.child("Societies").setValue(societies_val);
                     mDatabase.child("Twitter").setValue(twitter_val);
