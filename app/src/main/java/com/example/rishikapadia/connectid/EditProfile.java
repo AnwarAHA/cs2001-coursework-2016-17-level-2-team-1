@@ -1,10 +1,7 @@
 package com.example.rishikapadia.connectid;
 
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.Intent;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -16,13 +13,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.firebase.client.Firebase;
-import com.firebase.client.FirebaseError;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.vision.text.Text;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -35,12 +29,7 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 
-import junit.framework.Test;
-
 import java.util.Map;
-
-import static android.R.attr.data;
-import static com.google.zxing.qrcode.decoder.ErrorCorrectionLevel.Q;
 
 /**
  * Created by Rishi Kapadia on 18/01/2017.
@@ -53,6 +42,10 @@ public class EditProfile extends AppCompatActivity {
     Button profilePicture;
 
     ImageView picPreview;
+
+    ImageView twitterIcon;
+    ImageView instaIcon;
+    ImageView liIcon;
 
     private Uri imageUri = null;
 
@@ -90,6 +83,10 @@ public class EditProfile extends AppCompatActivity {
 
         picPreview = (ImageView) findViewById(R.id.picPreview);
 
+        twitterIcon = (ImageView)findViewById(R.id.twitterIcon);
+        instaIcon = (ImageView)findViewById(R.id.instaIcon);
+        liIcon = (ImageView)findViewById(R.id.liIcon);
+
         profilePicture.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -108,6 +105,8 @@ public class EditProfile extends AppCompatActivity {
         userTwitter = (EditText) findViewById(R.id.userTwitter);
         userInstagram = (EditText) findViewById(R.id.userInstagram);
         userLinkedin = (EditText) findViewById(R.id.userLinkedin);
+
+
 
 
         mDatabase.addValueEventListener(new ValueEventListener() {
@@ -190,10 +189,10 @@ public class EditProfile extends AppCompatActivity {
 
                     @SuppressWarnings("VisibleForTests")
                     Uri downloadUrl = taskSnapshot.getDownloadUrl();
-
                     mDatabase.child("Name").setValue(name_val);
                     mDatabase.child("Age").setValue(age_val);
                     mDatabase.child("Course").setValue(course_val);
+                    mDatabase.child("Contacts").setValue("");
                     mDatabase.child("Interests").setValue(interest_val);
                     mDatabase.child("Societies").setValue(societies_val);
                     mDatabase.child("Twitter").setValue(twitter_val);
@@ -209,7 +208,7 @@ public class EditProfile extends AppCompatActivity {
                 }
             });
         }else{
-                    Toast.makeText(getApplicationContext(), "One or more feilds are missing", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "One or more fields are missing", Toast.LENGTH_LONG).show();
             progressDialog.dismiss();
         }
 
@@ -233,7 +232,6 @@ public class EditProfile extends AppCompatActivity {
 
                 saveProfile();
                 overridePendingTransition(R.animator.slide_in_right,R.animator.slide_out_left);
-
                 return true;
 
             default:

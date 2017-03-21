@@ -49,9 +49,10 @@
         android:layout_height="wrap_content"
 
         android:gravity="center"
-        android:inputType="textPersonName"
         android:ems="10"
         android:id="@+id/userName"
+        android:inputType="textCapWords"
+
         android:hint="Name"/>
     </LinearLayout>
 
@@ -96,7 +97,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:inputType="textPersonName"
+        android:inputType="textCapWords"
         android:ems="10"
         android:id="@+id/userCourse"
         android:hint="Course"/>
@@ -143,7 +144,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:inputType="textPersonName"
+            android:inputType="textCapSentences"
         android:ems="10"
         android:id="@+id/userInterests"
         android:hint="Interests"/>
@@ -170,6 +171,12 @@
             android:ems="10"
             android:id="@+id/userTwitter"
             android:hint="Twitter handle"/>
+
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:id="@+id/twitterIcon"
+            android:src="@drawable/twitter_icon"/>
     </LinearLayout>
 
     <LinearLayout
@@ -193,6 +200,12 @@
             android:ems="10"
             android:id="@+id/userInstagram"
             android:hint="Instagram handle"/>
+
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:id="@+id/instaIcon"
+            android:src="@drawable/instagram_icon"/>
     </LinearLayout>
 
     <LinearLayout
@@ -203,7 +216,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Linkedin:"
+            android:text="LinkedIn:"
             android:textSize="20dp"
             android:ems="4"
             android:textColor="@color/colorText"/>
@@ -216,6 +229,12 @@
             android:ems="10"
             android:id="@+id/userLinkedin"
             android:hint="Linkedin handle"/>
+
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:id="@+id/liIcon"
+            android:src="@drawable/linkedin_icon"/>
     </LinearLayout>
 
 

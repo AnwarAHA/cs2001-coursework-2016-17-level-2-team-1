@@ -9,6 +9,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:id="@+id/namefeild"
+        android:inputType="textCapWords"
         android:hint="Name"/>
 
     <EditText
