@@ -16,17 +16,19 @@ import android.view.GestureDetector;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
-import android.view.View;
 import android.widget.Toast;
 
-
+import com.firebase.client.Firebase;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.zxing.Result;
 
 import me.dm7.barcodescanner.zxing.ZXingScannerView;
 
 import static android.Manifest.permission.CAMERA;
-import static com.google.zxing.qrcode.decoder.ErrorCorrectionLevel.Q;
 
 
 public class QRScanner extends AppCompatActivity implements ZXingScannerView.ResultHandler {
@@ -34,15 +36,25 @@ public class QRScanner extends AppCompatActivity implements ZXingScannerView.Res
     private static final int REQUEST_CAMERA = 1;
     private ZXingScannerView mScannerView;
     private static int camId = Camera.CameraInfo.CAMERA_FACING_BACK;
-    private FirebaseAuth Auth;
     public FirebaseAuth.AuthStateListener AuthListener;
+
+    private DatabaseReference mDatabase;
+
+    private FirebaseAuth firebaseAuth;
+
+    private FirebaseUser firebaseUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getSupportActionBar().setTitle("Scan a Profile");
+        Firebase.setAndroidContext(this);
 
-        Auth = FirebaseAuth.getInstance();
+        firebaseAuth = FirebaseAuth.getInstance();
+
+        firebaseUser = firebaseAuth.getCurrentUser();
+
+        mDatabase = FirebaseDatabase.getInstance().getReference().child("Users");
 
         AuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
@@ -73,7 +85,7 @@ public class QRScanner extends AppCompatActivity implements ZXingScannerView.Res
 
     public void onStart(){
         super.onStart();
-        Auth.addAuthStateListener(AuthListener);
+        firebaseAuth.addAuthStateListener(AuthListener);
     }
 
     private boolean checkPermission() {
@@ -155,15 +167,25 @@ public class QRScanner extends AppCompatActivity implements ZXingScannerView.Res
     public void handleResult(Result rawResult) {
 
         final String result = rawResult.getText();
+        final String contact = rawResult.getText();
         Log.e("QRCodeScanner", rawResult.getText());
         Log.e("QRCodeScanner", rawResult.getBarcodeFormat().toString());
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Scan Result");
-        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+        builder.setPositiveButton("Cancel", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
+
                 mScannerView.resumeCameraPreview(QRScanner.this);
+            }
+        });
+        builder.setNegativeButton("Store contact", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                storecontact(contact);
+                //Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(result));
+                //startActivity(browserIntent);
             }
         });
         builder.setNeutralButton("Add contact", new DialogInterface.OnClickListener() {
@@ -171,11 +193,34 @@ public class QRScanner extends AppCompatActivity implements ZXingScannerView.Res
             public void onClick(DialogInterface dialog, int which) {
                 //Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(result));
                 //startActivity(browserIntent);
+                retrievecontact(result);
             }
         });
         builder.setMessage(rawResult.getText());
         AlertDialog alert1 = builder.create();
         alert1.show();
+    }
+
+    private void storecontact(String contact){
+
+        DatabaseReference addcontact = mDatabase.child(firebaseAuth.getCurrentUser().getUid()).child("Contacts");
+        //DatabaseReference addcontact = mDatabase.child(firebaseAuth.getCurrentUser().getUid());
+        //addcontact.setValue(contact);
+        addcontact.child(contact).setValue(true);
+        Toast.makeText(getApplicationContext(), "Contact saved", Toast.LENGTH_SHORT);
+
+
+        Intent intent = new Intent(QRScanner.this, ContactList.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
+
+    }
+
+    private void retrievecontact(String id){
+
+        Query h = mDatabase.equalTo(id);
+
+
     }
     class LearnGesture extends GestureDetector.SimpleOnGestureListener{
 
@@ -246,7 +291,7 @@ public class QRScanner extends AppCompatActivity implements ZXingScannerView.Res
     }
 
     private void signOut(){
-        Auth.signOut();;
+        firebaseAuth.signOut();;
 
     }
 
