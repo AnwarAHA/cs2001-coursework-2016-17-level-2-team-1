@@ -133,17 +133,17 @@ public class ContactProfile extends AppCompatActivity implements OnMapReadyCallb
     }
 
     public void twitterclick(View view){
-        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.twitter.com/"+getIntent().getStringExtra("user_name")));
+        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.twitter.com/"+getIntent().getStringExtra("contactTwitter")));
         startActivity(browserIntent);
     }
 
     public void instagramclick(View view){
-        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.instagram.com/"+getIntent().getStringExtra("user_name")));
+        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.instagram.com/"+getIntent().getStringExtra("contactInstagram")));
         startActivity(browserIntent);
     }
 
     public void linkedinclick(View view){
-        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.linkedin.com/in/"+getIntent().getStringExtra("user_name")));
+        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.linkedin.com/in/"+getIntent().getStringExtra("contactLinkedin")));
         startActivity(browserIntent);
     }
 
