@@ -1,6 +1,7 @@
 package com.example.rishikapadia.connectid;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -9,9 +10,12 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.GestureDetector;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -25,12 +29,15 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Picasso;
 
 import junit.framework.Test;
 
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.Objects;
+
+import static com.example.rishikapadia.connectid.R.id.contactPicture;
 
 
 /**
@@ -95,6 +102,7 @@ public class ContactList extends AppCompatActivity {
         protected void onStart(){
             super.onStart();
 
+
             FirebaseRecyclerAdapter<Boolean, MyViewHolder> adapter = new FirebaseRecyclerAdapter<Boolean, MyViewHolder>(Boolean.class, R.layout.contactadapter, MyViewHolder.class,contacts){
                 protected void populateViewHolder(final MyViewHolder viewHolder, Boolean model, int position) {
                     String key = this.getRef(position).getKey();
@@ -102,15 +110,34 @@ public class ContactList extends AppCompatActivity {
                         public void onDataChange(DataSnapshot dataSnapshot) {
                             final String name = dataSnapshot.child("Name").getValue(String.class);
                             final String image = dataSnapshot.child("Image").getValue(String.class);
+                            final String year = dataSnapshot.child("Age").getValue(String.class);
+                            final String course = dataSnapshot.child("Course").getValue(String.class);
+                            final String societies = dataSnapshot.child("Societies").getValue(String.class);
+                            final String interests = dataSnapshot.child("Interests").getValue(String.class);
+                            final String twitter = dataSnapshot.child("Twitter").getValue(String.class);
+                            final String instagram = dataSnapshot.child("Instagram").getValue(String.class);
+                            final String linkedin = dataSnapshot.child("Linkedin").getValue(String.class);
                             ((TextView)viewHolder.itemView.findViewById(R.id.contactName)).setText(name);
+                            ((TextView)viewHolder.itemView.findViewById(R.id.contactYear)).setText(year);
+                            ((TextView)viewHolder.itemView.findViewById(R.id.contactCourse)).setText(course);
+                            Uri profilePic = Uri.parse(image);
+                            Picasso.with(ContactList.this).load(profilePic).fit().centerCrop().into(((ImageView)viewHolder.itemView.findViewById(contactPicture)));
                             viewHolder.mView.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
                                    Intent intent = new Intent(ContactList.this,ContactProfile.class);
 
-                                    intent.putExtra("img_id",image);
-                                    intent.putExtra("user_name",name);
+                                    intent.putExtra("img",image);
+                                    intent.putExtra("contactName",name);
+                                    intent.putExtra("contactYear",year);
+                                    intent.putExtra("contactCourse",course);
+                                    intent.putExtra("contactSocieties",societies);
+                                    intent.putExtra("contactInterests",interests);
+                                    intent.putExtra("contactTwitter",twitter);
+                                    intent.putExtra("contactInstagram",instagram);
+                                    intent.putExtra("contactsLinkedin",linkedin);
                                     startActivity(intent);
+                                    overridePendingTransition(R.animator.slide_in_right,R.animator.slide_out_left);
                                 }
                             });
                         }
@@ -123,7 +150,6 @@ public class ContactList extends AppCompatActivity {
                     });
                 }
             };
-
             recyclerView.setAdapter(adapter);
         }
 
@@ -141,55 +167,32 @@ public class ContactList extends AppCompatActivity {
         }
     }
 
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//
-//        getMenuInflater().inflate(R.menu.contactlist_menu,menu);
-//        MenuItem menuItem = menu.findItem(R.id.action_search);
-//        SearchView searchView = (SearchView) MenuItemCompat.getActionView(menuItem);
-//        searchView.setOnQueryTextListener(this);
-//        return true;
-//    }
-//    @Override
-//    public boolean onOptionsItemSelected(MenuItem item) {
-//        switch (item.getItemId()) {
-//
-//            case R.id.backButton:
-//                Intent intent = new Intent(this, QRScanner.class);
-//                startActivity(intent);
-//                overridePendingTransition(R.animator.slide_in_left, R.animator.slide_out_right);
-//                return true;
-//
-//            default:
-//                // If we got here, the user's action was not recognized.
-//                // Invoke the superclass to handle it.
-//                return super.onOptionsItemSelected(item);
-//
-//        }
-//    }
-//
-//
-//
-//    @Override
-//    public boolean onQueryTextSubmit(String query) {
-//        return false;
-//    }
-//
-//    @Override
-//    public boolean onQueryTextChange(String newText) {
-//
-//        newText = newText.toLowerCase();
-//        ArrayList<Name> newList = new ArrayList<>();
-//        for (Name name : arrayList){
-//            String name1= name.getName().toLowerCase();
-//            if(name1.contains(newText))
-//                newList.add(name);
-//
-//        }
-//
-//        adapter.setFilter(newList);
-//        return true;
-//    }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.contactlist_menu,menu);
+        return true;
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+
+            case R.id.backButton:
+                Intent intent = new Intent(this, QRScanner.class);
+                startActivity(intent);
+                overridePendingTransition(R.animator.slide_in_left, R.animator.slide_out_right);
+                return true;
+
+            default:
+                // If we got here, the user's action was not recognized.
+                // Invoke the superclass to handle it.
+                return super.onOptionsItemSelected(item);
+
+        }
+    }
+
+
+
+
 
 
 
@@ -205,7 +208,7 @@ public class ContactList extends AppCompatActivity {
 //
 //            if(e2.getX()>e1.getX()){
 //
-//                Intent intent = new Intent(ContactList.this,MainActivity.class);
+//                Intent intent = new Intent(ContactList.this,QRScanner.class);
 //                finish();
 //                startActivity(intent);
 //                overridePendingTransition(R.animator.slide_in_left,R.animator.slide_out_right);

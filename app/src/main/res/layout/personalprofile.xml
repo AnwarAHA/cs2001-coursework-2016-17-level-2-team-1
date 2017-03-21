@@ -14,7 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="250dp"
         android:id="@+id/profileCard"
-        android:src="@drawable/card_redesign_blank"
+        android:background="@drawable/card_redesign_blank"
         android:adjustViewBounds="false"
         android:layout_alignParentStart="true"/>
 

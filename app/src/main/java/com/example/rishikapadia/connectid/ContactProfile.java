@@ -8,6 +8,7 @@ import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GestureDetectorCompat;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.GestureDetector;
@@ -24,6 +25,9 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.squareup.picasso.Picasso;
+
+import static com.example.rishikapadia.connectid.R.id.picPreview;
 
 /**
  * Created by Rishi Kapadia on 18/01/2017.
@@ -35,8 +39,8 @@ public class ContactProfile extends AppCompatActivity implements OnMapReadyCallb
     private GoogleMap mMap;
 
 
-    ImageView imageView;
-    TextView tx_name;
+    ImageView contactPicture;
+    TextView contactName,contactYear,contactCourse,contactInterests,contactSocieties;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,17 +51,31 @@ public class ContactProfile extends AppCompatActivity implements OnMapReadyCallb
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
-        tx_name = (TextView) findViewById(R.id.txt);
-        tx_name.setText(""+getIntent().getStringExtra("user_name"));
+        contactName = (TextView) findViewById(R.id.contactName);
+        contactName.setText(""+getIntent().getStringExtra("contactName"));
 
-        imageView = (ImageView) findViewById(R.id.bgheader);
-        imageView.setImageResource(getIntent().getIntExtra("image_id",00));
+        contactYear = (TextView) findViewById(R.id.contactYear);
+        contactYear.setText(""+getIntent().getStringExtra("contactYear"));
+
+        contactCourse = (TextView) findViewById(R.id.contactCourse);
+        contactCourse.setText(""+getIntent().getStringExtra("contactCourse"));
+
+        contactSocieties = (TextView) findViewById(R.id.contactSocieties);
+        contactSocieties.setText(""+getIntent().getStringExtra("contactSocieties"));
+
+        contactInterests = (TextView) findViewById(R.id.contactInterests);
+        contactInterests.setText(""+getIntent().getStringExtra("contactInterests"));
+
+
+        contactPicture = (ImageView) findViewById(R.id.contactPicture);
+        Uri profilePic = Uri.parse(getIntent().getStringExtra("img"));
+        Picasso.with(ContactProfile.this).load(profilePic).fit().centerCrop().into(contactPicture);
 
         final Toolbar toolbar = (Toolbar) findViewById(R.id.MyToolbar);
 
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        //getSupportActionBar().setDisplayShowTitleEnabled(false);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
 
 
 
@@ -73,7 +91,7 @@ public class ContactProfile extends AppCompatActivity implements OnMapReadyCallb
                     scrollRange = appBarLayout.getTotalScrollRange();
                 }
                 if (scrollRange + verticalOffset == 0) {
-                    collapsingToolbarLayout.setTitle(getIntent().getStringExtra("user_name"));
+                    collapsingToolbarLayout.setTitle(getIntent().getStringExtra(""+getIntent().getStringExtra("contactName")));
                     isShow = true;
                 } else if(isShow) {
                     collapsingToolbarLayout.setTitle(" ");
@@ -81,8 +99,6 @@ public class ContactProfile extends AppCompatActivity implements OnMapReadyCallb
                 }
             }
         });
-
-
 
         Context context = this;
         collapsingToolbarLayout.setContentScrimColor(ContextCompat.getColor(context,R.color.colorPrimary));
@@ -140,7 +156,11 @@ public class ContactProfile extends AppCompatActivity implements OnMapReadyCallb
         mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
     }
 
+    public boolean onCreateOptionsMenu(Menu menu) {
 
+        getMenuInflater().inflate(R.menu.contactprofile_menu,menu);
+        return true;
+    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
