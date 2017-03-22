@@ -1,0 +1,220 @@
+body{
+	background-color: #e7e7e7;
+	font-family: 'Sanchez', serif;
+	height:100%;
+	margin:0px;
+	padding:0px;
+}
+
+h1{
+	font-size:38pt;
+}
+
+h2{
+	text-align:center;
+	margin-top:100px;
+	padding-left:10px;
+	padding-top:10px;
+}
+
+h3 {
+	text-align:left;
+	padding-top:25px;
+	font-size: 28pt;
+}
+
+.top_bar{
+	background-color: #fff;
+	position: fixed;
+	top:0;
+	left:0;
+	width: 100%;
+	height:100px;
+	text-align:center;
+	box-shadow: 0px 5px 10px grey;
+	overflow;scroll;
+	z-index:999;
+}
+
+.logo{
+	height:70px;
+}
+
+.top_bar li {
+	list-style-type:none;
+	display:inline;
+}
+
+
+/*===Medium screens +===*/
+@media only screen and (min-width: 992px) {
+    .nav {
+        display: block;
+    }
+	.mobile_nav{
+		display:none;
+	}
+}
+
+/*===Small screens===*/
+@media (max-width: 991px){
+    .mobile_nav {
+		display:block;
+    }
+	.nav{
+		display:none;
+	}
+	.top_bar{
+		height:200px;
+	}
+}
+
+/*===Mobile screen===*/
+.mobile_logo{
+	height: 140px;
+}
+
+.sidenav {
+    height: 100%;
+    width: 0;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    background-color: #111;
+    overflow-x: hidden;
+    transition: 0.5s;
+    padding-top: 60px;
+}
+
+.sidenav a {
+    padding: 8px 8px 8px 32px;
+    text-decoration: none;
+    font-size: 85px;
+    color: #818181;
+    display: block;
+    transition: 0.3s
+}
+
+.sidenav a:hover, .offcanvas a:focus{
+    color: #f1f1f1;
+}
+
+.sidenav .closebtn {
+    position: absolute;
+    top: 0;
+    left:0;
+    font-size: 85px;
+    margin-left: 0px;
+}
+
+
+/*===Menu===*/
+.menu_button{
+	float:left;
+	padding:16px;
+	font-size:100px;
+	text-decoration:none;
+	cursor:pointer;
+}
+
+.menu{
+	height:100%;
+	width:0;
+	position:fixed;
+	z-index:1;
+	top:0;
+	background-color:pink;
+	display:none;
+}
+
+.menu a{
+	padding:8px 8px 8px 32px;
+	text-decoration:none;
+	font-size:28px;
+	display:block;
+}
+
+/*===Background images===*/
+.bg_image_box{
+	height:100vh;
+	background-image:url("../media/images/bg_image_1.jpg");
+	background-repeat:no-repeat;
+	background-size:cover;
+}
+
+.bg_image_box h1{
+	position:absolute;
+	transform: translate(-50%, -50%);
+	margin-top:30%;
+	left:50%;
+	color:#fff;
+	font-size:15vw;
+}
+
+/*===Promo video===*/
+.promo_vid{
+	top:0%;
+	left:0%;
+	margin-top:-20vh;
+	margin-bottom:-40vh;
+	height:100%;
+	width:100%;
+}
+
+/*===Applying style for links===*/
+li a:link {
+	text-decoration: none;
+	color: black;
+}
+/*===Applying style to links that have been visited===*/
+li a:visited {
+	color: black;
+}
+
+
+/*===Google Play Store link===*/
+.gp_icon{
+	height: 180px;
+}
+
+.content{
+	background-color:#fff;
+	text-align:center;
+	width:75%;
+	margin: 0 auto;
+	z-index:0;
+	overflow:hidden;
+}
+
+.text_box{
+	margin-top:-40px;
+	padding:10px;
+	text-align:justify;
+	word-wrap:break-word;
+}
+
+.app_screens{
+	display:block;
+	max-width:400px;
+	width:auto;
+	height:auto;
+	margin:0 auto;
+	opacity:0;
+}
+
+.img_box{
+	width: 100%;
+	height: auto;
+	margin: auto;
+}
+
+.img_box h2{
+	font-size:5vh;
+}
+
+#content {
+    transition: margin-left 2s;
+    padding: 16px;
+}
+
