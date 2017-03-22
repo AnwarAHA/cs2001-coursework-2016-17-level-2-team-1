@@ -2,6 +2,7 @@ package com.example.rishikapadia.connectid;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
@@ -11,6 +12,7 @@ import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -18,6 +20,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.plus.model.people.Person;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -33,7 +36,7 @@ import static com.example.rishikapadia.connectid.R.id.picPreview;
 import static com.example.rishikapadia.connectid.R.id.userProfilePicture;
 
 
-public class PersonalProfile extends AppCompatActivity {
+public class CardView extends AppCompatActivity {
 
     private DatabaseReference mDatabase;
 
@@ -46,18 +49,17 @@ public class PersonalProfile extends AppCompatActivity {
     TextView textName,textAge,textCourse,textSocieties,textInterests;
 
     ImageButton profilePicture;
+    Button close;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.personalprofile);
-        getSupportActionBar().setTitle("My Profile");
+        setContentView(R.layout.activity_card_view);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
 
         textName = (TextView) findViewById(R.id.textName);
         textAge = (TextView) findViewById(R.id.textAge);
         textCourse = (TextView) findViewById(R.id.textCourse);
-        textSocieties = (TextView) findViewById(R.id.textSocieties);
-        textInterests = (TextView) findViewById(R.id.textInterests);
         profilePicture = (ImageButton) findViewById(R.id.userProfilePicture);
 
         firebaseAuth = FirebaseAuth.getInstance();
@@ -74,8 +76,6 @@ public class PersonalProfile extends AppCompatActivity {
                 String savedName = map.get("Name");
                 String savedAge = map.get("Age");
                 String savedCourse = map.get("Course");
-                String savedInterests = map.get("Interests");
-                String savedSocieties = map.get("Societies");
                 String savedProfilePic = map.get("Image");
                 String savedTwitter = map.get("Twitter");
                 String savedInstagram = map.get("Instagram");
@@ -84,13 +84,11 @@ public class PersonalProfile extends AppCompatActivity {
                 textName.setText(savedName);
                 textAge.setText(savedAge);
                 textCourse.setText(savedCourse);
-                textInterests.setText(savedInterests);
-                textSocieties.setText(savedSocieties);
                 twitterHandle = savedTwitter;
                 instaHandle = savedInstagram;
                 linkedinHandle = savedLinkedin;
                 Uri profilePic = Uri.parse(savedProfilePic);
-                Picasso.with(PersonalProfile.this).load(profilePic).fit().centerCrop().into(profilePicture);
+                Picasso.with(CardView.this).load(profilePic).fit().centerCrop().into(profilePicture);
 
 
             }
@@ -103,80 +101,20 @@ public class PersonalProfile extends AppCompatActivity {
 
     }
 
-
     public void profilePicClick(View view){
-        Intent intent = new Intent(PersonalProfile.this,ProfileImage.class);
+        Intent intent = new Intent(CardView.this,ProfileImage.class);
         startActivity(intent);
     }
 
     public void cardClick(View view){
-        Intent intent = new Intent(PersonalProfile.this,CardView.class);
+        Intent intent = new Intent(CardView.this,CardViewBack.class);
         startActivity(intent);
     }
 
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.personalprofilemenu,menu);
-        return true;
+    public void close(View view){
+        Intent intent = new Intent(CardView.this, PersonalProfile.class);
+        startActivity(intent);
     }
-
-    public void twitterclick(View view){
-        if (TextUtils.isEmpty(twitterHandle)){
-            Toast.makeText(getBaseContext(),"Twitter not linked",Toast.LENGTH_LONG).show();
-        }else {
-            Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.twitter.com/" + twitterHandle));
-            startActivity(browserIntent);
-        }
-    }
-
-    public void instagramclick(View view){
-        if (TextUtils.isEmpty(instaHandle)){
-            Toast.makeText(getBaseContext(),"Instagram not linked",Toast.LENGTH_LONG).show();
-        }else{
-            Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.instagram.com/"+instaHandle));
-            startActivity(browserIntent);
-        }
-
-    }
-
-    public void linkedinclick(View view){
-        if (TextUtils.isEmpty(linkedinHandle)){
-            Toast.makeText(getBaseContext(),"Linkedin not linked",Toast.LENGTH_LONG).show();
-        }else {
-            Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.linkedin.com/in/" + linkedinHandle));
-            startActivity(browserIntent);
-        }
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.action_settings:
-                // User chose the "Settings" item, show the app settings UI...
-                return true;
-
-            case R.id.editButton:
-                Intent intent = new Intent(this,EditProfile.class);
-                startActivity(intent);
-                overridePendingTransition(R.animator.slide_in_left,R.animator.slide_out_right);
-                return true;
-
-            case R.id.backButton:
-                Intent intent2 = new Intent(this,QRScanner.class);
-                startActivity(intent2);
-                overridePendingTransition(R.animator.slide_in_right,R.animator.slide_out_left);
-                return true;
-
-
-            default:
-                // If we got here, the user's action was not recognized.
-                // Invoke the superclass to handle it.
-                return super.onOptionsItemSelected(item);
-
-        }
-    }
-
 }
 
 
